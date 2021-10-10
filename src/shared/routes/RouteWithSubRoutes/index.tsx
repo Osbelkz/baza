@@ -3,8 +3,8 @@ import { Redirect, Route } from "react-router-dom";
 import paths from "../paths";
 import { IRoute } from "../types";
 
-const RouteWithSubRoutes = (route: IRoute) => {
-  const authenticated = false;
+const RouteWithSubRoutes: React.FC<{ route: IRoute }> = ({ route }) => {
+  const authenticated = true;
 
   return (
     <Suspense fallback={route.fallback}>
