@@ -1,10 +1,12 @@
 import React, { Suspense } from "react";
 import { Redirect, Route } from "react-router-dom";
+import { useStore } from "effector-react";
 import paths from "../paths";
 import { IRoute } from "../types";
+import { $app } from "../../models/app";
 
 const RouteWithSubRoutes: React.FC<{ route: IRoute }> = ({ route }) => {
-  const authenticated = true;
+  const { isUserAuth } = useStore($app);
 
   return (
     <Suspense fallback={route.fallback}>
@@ -19,7 +21,7 @@ const RouteWithSubRoutes: React.FC<{ route: IRoute }> = ({ route }) => {
               }}
             />
           ) : route.private ? (
-            authenticated ? (
+            isUserAuth ? (
               route.component && (
                 <route.component {...props} routes={route.routes} />
               )
