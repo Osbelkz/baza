@@ -20,7 +20,6 @@ export const routes: IRoute[] = [
     path: paths.admin,
     component: lazy(() => import("pages/admin-panel")),
     fallback: <div> Loading... </div>,
-    redirect: paths.auth.login,
     private: true,
   },
 ];

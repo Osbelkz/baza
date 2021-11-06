@@ -12,12 +12,13 @@ import {
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-export const AdminPanelPage = () => {
+const AdminPanelPage = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   const onCollapse = (value: boolean) => {
     setCollapsed(value);
   };
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>

@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Form, Input } from "antd";
 import styled, { css } from "styled-components";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, useHistory } from "react-router-dom";
 import { StaticContext } from "react-router";
+import { authUser } from "features/Auth/model";
+import { useStore } from "effector-react";
+import { LoginDTO } from "../../features/Auth/model/models";
+import { $app } from "../../shared/models/app";
 
 const ViewStyled = styled.div`
   ${(props) => css`
@@ -22,15 +26,27 @@ type LocationState = {
 const AdminLoginPage: React.FC<
   RouteComponentProps<AdminLoginPageProps, StaticContext, LocationState>
 > = ({ location }) => {
+  const { isUserAuth } = useStore($app);
+  const history = useHistory();
+
   console.log(location.state.from);
 
-  const onFinish = (values: any) => {
+  console.log("admin login page");
+
+  const onFinish = (values: LoginDTO) => {
+    authUser(values);
     console.log("Success:", values);
   };
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
+
+  useEffect(() => {
+    if (isUserAuth) {
+      history.push(location.state.from);
+    }
+  }, [history, isUserAuth, location.state.from]);
 
   return (
     <ViewStyled>
@@ -45,7 +61,7 @@ const AdminLoginPage: React.FC<
       >
         <Form.Item
           label="Имя пользователя"
-          name="username"
+          name="login"
           rules={[{ required: true, message: "Введите имя пользователя!" }]}
         >
           <Input />

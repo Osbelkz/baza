@@ -12,8 +12,9 @@ const RouteWithSubRoutes: React.FC<{ route: IRoute }> = ({ route }) => {
     <Suspense fallback={route.fallback}>
       <Route
         path={route.path}
-        render={(props) =>
-          route.redirect ? (
+        exact={route.exact}
+        render={(props) => {
+          return route.redirect ? (
             <Redirect
               to={{
                 pathname: route.redirect,
@@ -37,8 +38,8 @@ const RouteWithSubRoutes: React.FC<{ route: IRoute }> = ({ route }) => {
             route.component && (
               <route.component {...props} routes={route.routes} />
             )
-          )
-        }
+          );
+        }}
       />
     </Suspense>
   );
