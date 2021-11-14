@@ -6,7 +6,7 @@ export const routes: IRoute[] = [
   {
     exact: true,
     path: paths.home,
-    redirect: paths.admin,
+    redirect: paths.admin.root,
     fallback: <div> Loading... </div>,
   },
   {
@@ -16,10 +16,19 @@ export const routes: IRoute[] = [
     fallback: <div> Loading... </div>,
   },
   {
-    exact: true,
-    path: paths.admin,
+    exact: false,
+    path: paths.admin.root,
     component: lazy(() => import("pages/admin-panel")),
     fallback: <div> Loading... </div>,
     private: true,
+    routes: [
+      {
+        exact: true,
+        path: paths.admin.categories,
+        component: lazy(() => import("features/AdminPanelCategories")),
+        fallback: <div> Loading... </div>,
+        private: true,
+      },
+    ],
   },
 ];

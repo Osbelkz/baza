@@ -60,7 +60,7 @@ const AdminLoginPage: React.FC<
         autoComplete="off"
       >
         <Form.Item
-          label="Имя пользователя"
+          label="Логин"
           name="login"
           rules={[{ required: true, message: "Введите имя пользователя!" }]}
         >

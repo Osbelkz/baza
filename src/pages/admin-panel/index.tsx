@@ -2,17 +2,21 @@ import React, { useState } from "react";
 
 import { Layout, Menu, Breadcrumb } from "antd";
 import {
-  DesktopOutlined,
   PieChartOutlined,
   FileOutlined,
   TeamOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import { IRoute } from "shared/routes/types";
+import { Switch } from "react-router";
+import { NavLink } from "react-router-dom";
+import paths from "shared/routes/paths";
+import RouteWithSubRoutes from "../../shared/routes/RouteWithSubRoutes";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-const AdminPanelPage = () => {
+const AdminPanelPage: React.FC<{ routes: IRoute[] }> = ({ routes }) => {
   const [collapsed, setCollapsed] = useState(false);
 
   const onCollapse = (value: boolean) => {
@@ -24,12 +28,11 @@ const AdminPanelPage = () => {
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
         <div className="logo" />
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-          <Menu.Item key="1" icon={<PieChartOutlined />}>
-            Option 1
-          </Menu.Item>
-          <Menu.Item key="2" icon={<DesktopOutlined />}>
-            Option 2
-          </Menu.Item>
+          <NavLink to={paths.admin.categories}>
+            <Menu.Item key="1" icon={<PieChartOutlined />}>
+              Option 1
+            </Menu.Item>
+          </NavLink>
           <SubMenu key="sub1" icon={<UserOutlined />} title="User">
             <Menu.Item key="3">Tom</Menu.Item>
             <Menu.Item key="4">Bill</Menu.Item>
@@ -55,12 +58,14 @@ const AdminPanelPage = () => {
             className="site-layout-background"
             style={{ padding: 24, minHeight: 360 }}
           >
-            Bill is a cat.
+            <Switch>
+              {routes.map((route) => (
+                <RouteWithSubRoutes key={route.path} {...route} />
+              ))}
+            </Switch>
           </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©2018 Created by Ant UED
-        </Footer>
+        <Footer style={{ textAlign: "center" }}>Baza ©2021</Footer>
       </Layout>
     </Layout>
   );
