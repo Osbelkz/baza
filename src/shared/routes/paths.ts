@@ -1,6 +1,9 @@
 const paths = {
   home: "/",
-  admin: "/admin/panel",
+  admin: {
+    root: "/admin/panel",
+    categories: "/admin/panel/categories",
+  },
   auth: {
     login: "/auth/login",
     signUp: "/auth/sign-up",

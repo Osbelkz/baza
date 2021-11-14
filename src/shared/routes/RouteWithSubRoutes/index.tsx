@@ -5,7 +5,7 @@ import paths from "../paths";
 import { IRoute } from "../types";
 import { $app } from "../../models/app";
 
-const RouteWithSubRoutes: React.FC<{ route: IRoute }> = ({ route }) => {
+const RouteWithSubRoutes: React.FC<IRoute> = ({ ...route }) => {
   const { isUserAuth } = useStore($app);
 
   return (
