@@ -1,46 +1,69 @@
-import { Button, Form, Input } from "antd";
 import React, { useEffect } from "react";
 import { useStore } from "effector-react";
-import { $categories, createCategoryFx, getCategoriesFx } from "./model";
-import { ICreateCategoryData } from "../../shared/api/categories";
+import { Button, Form, Input } from "antd";
+import { $users, getUsersFx, registrationUserFx } from "./model";
+import { UsersTable } from "./ui/Table";
+import { IRegisterUserData } from "../../shared/api/auth";
 
 const AdminPanelUsers = () => {
-  const categories = useStore($categories);
+  const users = useStore($users);
 
   useEffect(() => {
-    getCategoriesFx({});
+    getUsersFx({});
   }, []);
 
-  const createCategory = (data: ICreateCategoryData) => {
-    createCategoryFx(data);
+  console.log(users);
+
+  const registationUser = (data: IRegisterUserData) => {
+    registrationUserFx(data);
   };
 
   return (
     <div>
-      users
       <Form
-        name="create category"
+        name="user registration"
         layout="vertical"
         labelCol={{ span: 16 }}
         wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
-        onFinish={createCategory}
+        onFinish={registationUser}
         autoComplete="off"
       >
         <Form.Item
-          label="наименование новой категории"
-          name="category"
+          label="email"
+          name="email"
           rules={[{ required: true, message: "!" }]}
         >
           <Input />
         </Form.Item>
 
         <Form.Item
-          label="наименование категории родителя"
-          name="parent"
-          rules={[{ required: false, message: "!" }]}
+          label="firstName"
+          name="firstName"
+          rules={[{ required: true, message: "!" }]}
         >
           <Input />
+        </Form.Item>
+        <Form.Item
+          label="lastname"
+          name="lastname"
+          rules={[{ required: true, message: "!" }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="login"
+          name="login"
+          rules={[{ required: true, message: "!" }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="password"
+          name="password"
+          rules={[{ required: true, message: "!" }]}
+        >
+          <Input.Password />
         </Form.Item>
 
         <Form.Item wrapperCol={{ span: 16 }}>
@@ -49,6 +72,7 @@ const AdminPanelUsers = () => {
           </Button>
         </Form.Item>
       </Form>
+      <UsersTable users={users} />
     </div>
   );
 };

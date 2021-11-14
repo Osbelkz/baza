@@ -1,28 +1,44 @@
 import { createEffect, restore, sample } from "effector";
 import {
-  categoriesService,
-  ICreateCategoryData,
-  IGetCategoriesParams,
-} from "../../../shared/api/categories";
+  IDeleteUserParams,
+  IGetUsersParams,
+  IUpdateUserData,
+  usersService,
+} from "../../../shared/api/users";
+import { authService, IRegisterUserData } from "../../../shared/api/auth";
 
-export const getCategoriesFx = createEffect(
-  async (params: IGetCategoriesParams) => {
-    const response = await categoriesService.getCategories(params);
-    return response.data;
+export const registrationUserFx = createEffect(
+  async (data: IRegisterUserData) => {
+    const response = await authService.registrationUser(data);
+    return response;
   }
 );
 
-export const $categories = restore(getCategoriesFx.doneData, []);
+export const getUsersFx = createEffect(async (params: IGetUsersParams) => {
+  const response = await usersService.getUsers(params);
+  return response.data.content;
+});
 
-export const createCategoryFx = createEffect(
-  async (data: ICreateCategoryData) => {
-    const response = await categoriesService.createCategory(data);
-    return response.data;
-  }
-);
+export const $users = restore(getUsersFx.doneData, []);
+
+export const updateUserFx = createEffect(async (data: IUpdateUserData) => {
+  const response = await usersService.updateUser(data);
+  console.log(response);
+  return response;
+});
+
+export const deleteUserFx = createEffect(async (params: IDeleteUserParams) => {
+  const response = await usersService.deleteUser(params);
+  console.log(response);
+  return response;
+});
 
 sample({
-  source: createCategoryFx.doneData,
+  clock: [
+    updateUserFx.doneData,
+    registrationUserFx.doneData,
+    deleteUserFx.done,
+  ],
   fn: () => ({}),
-  target: getCategoriesFx,
+  target: getUsersFx,
 });

@@ -45,7 +45,7 @@ export interface IUpdateUserData {
 }
 
 export interface IDeleteUserParams {
-  userId: string;
+  userId: number;
 }
 
 export const usersService = {
@@ -56,7 +56,7 @@ export const usersService = {
     return apiInstance.put<IUpdateUserData, IUser>("admin/users", data);
   },
   deleteUser(params: IDeleteUserParams) {
-    return apiInstance.delete("admin/users", { params });
+    return apiInstance.delete(`admin/users/${params.userId}`);
   },
   restoreUser(userId: string) {
     return apiInstance.put<IUser>(`admin/users/restore/${userId}`);
