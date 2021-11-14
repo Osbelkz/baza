@@ -30,7 +30,12 @@ const AdminPanelPage: React.FC<{ routes: IRoute[] }> = ({ routes }) => {
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
           <NavLink to={paths.admin.categories}>
             <Menu.Item key="1" icon={<PieChartOutlined />}>
-              Option 1
+              Категории
+            </Menu.Item>
+          </NavLink>
+          <NavLink to={paths.admin.users}>
+            <Menu.Item key="2" icon={<PieChartOutlined />}>
+              Пользователи
             </Menu.Item>
           </NavLink>
           <SubMenu key="sub1" icon={<UserOutlined />} title="User">
