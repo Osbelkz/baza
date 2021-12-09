@@ -4,7 +4,7 @@ import { IUser } from "./users";
 export interface IRegisterUserData {
   email: string;
   firstName: string;
-  lastname: string;
+  lastName: string;
   login: string;
   password: string;
 }

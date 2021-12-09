@@ -2,7 +2,6 @@ import { apiInstance } from "./index";
 
 export interface IGetCategoriesParams {
   name?: string;
-  parent?: number;
 }
 
 export interface ICategorySibling {
@@ -18,7 +17,6 @@ export interface ICategory {
 
 export interface ICreateCategoryData {
   category: string;
-  parent: string | null;
 }
 
 export interface IUpdateCategoryData {
@@ -29,12 +27,11 @@ export interface IUpdateCategoryData {
 
 export const categoriesService = {
   getCategories(params: IGetCategoriesParams) {
-    return apiInstance.get<ICategory[]>("admin/categories", { params });
+    return apiInstance.get<ICategory[]>("categories", { params });
   },
   createCategory(data: ICreateCategoryData) {
     return apiInstance.post("admin/categories", {
-      category: data.category,
-      parent: null,
+      name: data.category,
     });
   },
   updateCategory(data: IUpdateCategoryData) {

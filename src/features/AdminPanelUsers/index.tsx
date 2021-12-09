@@ -45,8 +45,8 @@ const AdminPanelUsers = () => {
           <Input />
         </Form.Item>
         <Form.Item
-          label="lastname"
-          name="lastname"
+          label="lastName"
+          name="lastName"
           rules={[{ required: true, message: "!" }]}
         >
           <Input />
