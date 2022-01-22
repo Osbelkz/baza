@@ -28,11 +28,14 @@ const AdminPanelPage: React.FC<{ routes: IRoute[] }> = ({ routes }) => {
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
         <div className="logo" />
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-          <NavLink to={paths.admin.categories}>
-            <Menu.Item key="1" icon={<PieChartOutlined />}>
-              Option 1
-            </Menu.Item>
-          </NavLink>
+          <Menu.Item key="1" icon={<PieChartOutlined />}>
+            Категории
+            <NavLink to={paths.admin.categories} />
+          </Menu.Item>
+          <Menu.Item key="2" icon={<PieChartOutlined />}>
+            Пользователи
+            <NavLink to={paths.admin.users} />
+          </Menu.Item>
           <SubMenu key="sub1" icon={<UserOutlined />} title="User">
             <Menu.Item key="3">Tom</Menu.Item>
             <Menu.Item key="4">Bill</Menu.Item>

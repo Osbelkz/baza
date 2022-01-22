@@ -29,6 +29,13 @@ export const routes: IRoute[] = [
         fallback: <div> Loading... </div>,
         private: true,
       },
+      {
+        exact: true,
+        path: paths.admin.users,
+        component: lazy(() => import("features/AdminPanelUsers")),
+        fallback: <div> Loading... </div>,
+        private: true,
+      },
     ],
   },
 ];

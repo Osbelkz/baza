@@ -3,9 +3,8 @@ import React, { useEffect } from "react";
 import { useStore } from "effector-react";
 import { $categories, createCategoryFx, getCategoriesFx } from "./model";
 import { ICreateCategoryData } from "../../shared/api/categories";
-import { CategoriesTable } from "./ui/Table";
 
-const AdminPanelCategories = () => {
+const AdminPanelCategoriesGroup = () => {
   const categories = useStore($categories);
 
   useEffect(() => {
@@ -37,15 +36,22 @@ const AdminPanelCategories = () => {
           <Input />
         </Form.Item>
 
+        <Form.Item
+          label="наименование категории родителя"
+          name="parent"
+          rules={[{ required: false, message: "!" }]}
+        >
+          <Input />
+        </Form.Item>
+
         <Form.Item wrapperCol={{ span: 16 }}>
           <Button type="primary" htmlType="submit">
             Создать
           </Button>
         </Form.Item>
       </Form>
-      <CategoriesTable categories={categories} />
     </div>
   );
 };
 
-export default AdminPanelCategories;
+export default AdminPanelCategoriesGroup;
