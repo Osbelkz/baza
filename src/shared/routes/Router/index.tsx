@@ -1,12 +1,6 @@
 import React from "react";
 import { IRoute } from "../types";
-import {
-  Navigate,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import paths from "../paths";
 import AdminPanelPage from "../../../pages/admin-panel";
 import AdminLoginPage from "../../../pages/auth";
@@ -18,7 +12,6 @@ interface IProps {
   routes: IRoute[];
 }
 const Router: React.FC<IProps> = () => {
-  const navigate = useNavigate();
   const location = useLocation();
 
   return (
