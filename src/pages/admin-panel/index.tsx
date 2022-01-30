@@ -1,22 +1,18 @@
 import React, { useState } from "react";
-
-import { Layout, Menu, Breadcrumb } from "antd";
+import { Breadcrumb, Layout, Menu } from "antd";
 import {
-  PieChartOutlined,
   FileOutlined,
+  PieChartOutlined,
   TeamOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { IRoute } from "shared/routes/types";
-import { Switch } from "react-router";
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import paths from "shared/routes/paths";
-import RouteWithSubRoutes from "../../shared/routes/RouteWithSubRoutes";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-const AdminPanelPage: React.FC<{ routes: IRoute[] }> = ({ routes }) => {
+const AdminPanelPage: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   const onCollapse = (value: boolean) => {
@@ -29,12 +25,10 @@ const AdminPanelPage: React.FC<{ routes: IRoute[] }> = ({ routes }) => {
         <div className="logo" />
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
           <Menu.Item key="1" icon={<PieChartOutlined />}>
-            Категории
-            <NavLink to={paths.admin.categories} />
+            <NavLink to={paths.admin.root}>Категории</NavLink>
           </Menu.Item>
           <Menu.Item key="2" icon={<PieChartOutlined />}>
-            Пользователи
-            <NavLink to={paths.admin.users} />
+            <NavLink to={paths.admin.users}>Пользователи</NavLink>
           </Menu.Item>
           <SubMenu key="sub1" icon={<UserOutlined />} title="User">
             <Menu.Item key="3">Tom</Menu.Item>
@@ -61,11 +55,7 @@ const AdminPanelPage: React.FC<{ routes: IRoute[] }> = ({ routes }) => {
             className="site-layout-background"
             style={{ padding: 24, minHeight: 360 }}
           >
-            <Switch>
-              {routes.map((route) => (
-                <RouteWithSubRoutes key={route.path} {...route} />
-              ))}
-            </Switch>
+            <Outlet />
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>Baza ©2021</Footer>

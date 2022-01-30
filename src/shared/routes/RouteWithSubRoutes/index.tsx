@@ -1,5 +1,5 @@
-import React, { Suspense } from "react";
-import { Redirect, Route } from "react-router-dom";
+import React from "react";
+import { Navigate, Route } from "react-router-dom";
 import { useStore } from "effector-react";
 import paths from "../paths";
 import { IRoute } from "../types";
@@ -7,41 +7,23 @@ import { $app } from "../../models/app";
 
 const RouteWithSubRoutes: React.FC<IRoute> = ({ ...route }) => {
   const { isUserAuth } = useStore($app);
-
   return (
-    <Suspense fallback={route.fallback}>
-      <Route
-        path={route.path}
-        exact={route.exact}
-        render={(props) => {
-          return route.redirect ? (
-            <Redirect
-              to={{
-                pathname: route.redirect,
-                state: { from: route.path },
-              }}
-            />
-          ) : route.private ? (
-            isUserAuth ? (
-              route.component && (
-                <route.component {...props} routes={route.routes} />
-              )
-            ) : (
-              <Redirect
-                to={{
-                  pathname: paths.auth.login,
-                  state: { from: route.path },
-                }}
-              />
-            )
+    <Route
+      path={route.path}
+      children={() => {
+        return route.redirect ? (
+          <Navigate to={route.redirect} state={route.path} />
+        ) : route.private ? (
+          isUserAuth ? (
+            route.component && <route.component routes={route.routes} />
           ) : (
-            route.component && (
-              <route.component {...props} routes={route.routes} />
-            )
-          );
-        }}
-      />
-    </Suspense>
+            <Navigate to={paths.auth.login} state={route.path} />
+          )
+        ) : (
+          route.component && <route.component routes={route.routes} />
+        );
+      }}
+    />
   );
 };
 
