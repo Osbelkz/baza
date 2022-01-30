@@ -24,7 +24,7 @@ export const routes: IRoute[] = [
     routes: [
       {
         exact: true,
-        path: paths.admin.categories,
+        path: paths.admin.root,
         component: lazy(() => import("features/AdminPanelCategories")),
         fallback: <div> Loading... </div>,
         private: true,

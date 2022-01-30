@@ -1,19 +1,45 @@
 import React from "react";
-import { Switch } from "react-router";
 import { IRoute } from "../types";
-import RouteWithSubRoutes from "../RouteWithSubRoutes";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import paths from "../paths";
+import AdminPanelPage from "../../../pages/admin-panel";
+import AdminLoginPage from "../../../pages/auth";
+import AdminPanelCategories from "../../../features/AdminPanelCategories";
+import AdminPanelUsers from "../../../features/AdminPanelUsers";
+import { RedirectUnauthorizedUser } from "../../hocs";
 
 interface IProps {
   routes: IRoute[];
 }
+const Router: React.FC<IProps> = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
 
-const Router: React.FC<IProps> = ({ routes }) => {
   return (
-    <Switch>
-      {routes.map((route: IRoute) => (
-        <RouteWithSubRoutes key={route.path} {...route} />
-      ))}
-    </Switch>
+    <Routes>
+      <Route
+        path={paths.home}
+        element={<Navigate to={paths.auth.login} state={location.state} />}
+      />
+      <Route
+        path={paths.admin.root}
+        element={
+          <RedirectUnauthorizedUser>
+            <AdminPanelPage />
+          </RedirectUnauthorizedUser>
+        }
+      >
+        <Route index element={<AdminPanelCategories />} />
+        <Route path={paths.admin.users} element={<AdminPanelUsers />} />
+      </Route>
+      <Route path={paths.auth.login} element={<AdminLoginPage />} />
+    </Routes>
   );
 };
 

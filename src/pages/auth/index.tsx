@@ -1,40 +1,30 @@
 import React, { useEffect } from "react";
 import { Button, Form, Input } from "antd";
-import styled, { css } from "styled-components";
-import { RouteComponentProps, useHistory } from "react-router-dom";
-import { StaticContext } from "react-router";
-import { authUser } from "features/Auth/model";
+import styled from "styled-components";
+import { authUserFx } from "features/Auth/model";
 import { useStore } from "effector-react";
 import { LoginDTO } from "../../features/Auth/model/models";
 import { $app } from "../../shared/models/app";
+import { useLocation, useNavigate } from "react-router-dom";
+import paths from "../../shared/routes/paths";
 
 const ViewStyled = styled.div`
-  ${(props) => css`
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `}
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 interface AdminLoginPageProps {}
 
-type LocationState = {
-  from: Location;
-};
-
-const AdminLoginPage: React.FC<
-  RouteComponentProps<AdminLoginPageProps, StaticContext, LocationState>
-> = ({ location }) => {
+const AdminLoginPage: React.FC<AdminLoginPageProps> = () => {
   const { isUserAuth } = useStore($app);
-  const history = useHistory();
-
-  console.log(location.state.from);
-
+  const location = useLocation();
+  const navigate = useNavigate();
   console.log("admin login page");
 
   const onFinish = (values: LoginDTO) => {
-    authUser(values);
+    authUserFx(values);
     console.log("Success:", values);
   };
 
@@ -44,9 +34,13 @@ const AdminLoginPage: React.FC<
 
   useEffect(() => {
     if (isUserAuth) {
-      history.push(location.state.from);
+      if (location.state) {
+        navigate(location.state as string);
+      } else {
+        navigate(paths.admin.root);
+      }
     }
-  }, [history, isUserAuth, location.state.from]);
+  }, [isUserAuth, location.state, navigate]);
 
   return (
     <ViewStyled>

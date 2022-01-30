@@ -5,7 +5,11 @@ import { LoginDTO } from "./models";
 const BASE_URL = "/auth/login";
 
 export const auth = (data: LoginDTO): AxiosPromise<AuthResponse> => {
-  return apiInstance.post(BASE_URL, data);
+  return apiInstance.post(BASE_URL, data, {
+    headers: {
+      Authorization: "",
+    },
+  });
 };
 
 export type AuthResponse = {
