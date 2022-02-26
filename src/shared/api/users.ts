@@ -1,3 +1,4 @@
+import { IItemsResponse } from "shared/types";
 import { apiInstance } from "./index";
 
 export interface IGetUsersParams {
@@ -16,27 +17,6 @@ export interface IUser {
   login: string;
 }
 
-export interface IGetUsersResponse {
-  content: IUser[];
-  empty: boolean;
-  first: boolean;
-  last: boolean;
-  number: number;
-  numberOfElements: number;
-  pageable: {
-    offset: number;
-    pageNumber: number;
-    pageSize: number;
-    paged: boolean;
-    sort: {
-      empty: boolean;
-      sorted: boolean;
-      unsorted: boolean;
-    };
-    unpaged: boolean;
-  };
-}
-
 export interface IUpdateUserData {
   email: string;
   firstName: string;
@@ -49,16 +29,16 @@ export interface IDeleteUserParams {
 }
 
 export const usersService = {
-  getUsers(params: IGetUsersParams) {
-    return apiInstance.get<IGetUsersResponse>("admin/users", { params });
+  getUsers(params?: IGetUsersParams) {
+    return apiInstance.get<IItemsResponse<IUser[]>>("users", { params });
   },
   updateUser(data: IUpdateUserData) {
-    return apiInstance.put<IUpdateUserData, IUser>("admin/users", data);
+    return apiInstance.put<IUpdateUserData, IUser>("users", data);
   },
   deleteUser(params: IDeleteUserParams) {
-    return apiInstance.delete(`admin/users/${params.userId}`);
+    return apiInstance.delete(`users/${params.userId}`);
   },
   restoreUser(userId: string) {
-    return apiInstance.put<IUser>(`admin/users/restore/${userId}`);
+    return apiInstance.put<IUser>(`users/restore/${userId}`);
   },
 };

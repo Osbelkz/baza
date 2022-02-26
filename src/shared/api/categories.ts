@@ -1,4 +1,5 @@
 import { apiInstance } from "./index";
+import { IItemsResponse } from "../types";
 
 export interface IGetCategoriesParams {
   name?: string;
@@ -27,7 +28,9 @@ export interface IUpdateCategoryData {
 
 export const categoriesService = {
   getCategories(params: IGetCategoriesParams) {
-    return apiInstance.get<ICategory[]>("categories", { params });
+    return apiInstance.get<IItemsResponse<ICategory[]>>("categories", {
+      params,
+    });
   },
   createCategory(data: ICreateCategoryData) {
     return apiInstance.post("admin/categories", {

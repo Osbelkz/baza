@@ -1,0 +1,761 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: "http://localhost:8080"
+    description: Generated server url
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginDto"
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JwtDto"
+  /auth/registration:
+    post:
+      tags:
+        - Auth
+      summary: Login
+      operationId: registration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRegistrationDto"
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDto"
+  /auth/refreshToken:
+    post:
+      tags:
+        - Auth
+      summary: Refresh access token
+      operationId: refreshAccessToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefreshTokenDto"
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JwtDto"
+  /construction-materials:
+    post:
+      tags:
+        - ConstructionMaterials
+      summary: Create construction materials
+      operationId: create-construction-materials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateConstructionMaterialDto"
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConstructionMaterialDto"
+    get:
+      tags:
+        - ConstructionMaterials
+      summary: Get construction materials
+      operationId: get-construction-materials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateConstructionMaterialDto"
+        required: true
+      parameters:
+        - name: offset
+          in: query
+          description: Pagination offset
+          schema:
+            type: number
+            format: int32
+            default: 20
+        - name: page
+          in: query
+          description: Pagination limit
+          schema:
+            type: number
+            format: int32
+            default: 1
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageConstructionMaterialDto"
+  /categories:
+    get:
+      tags:
+        - Categories group
+      summary: Get categories group
+      operationId: get-categories-group
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: parent
+          in: query
+          description: Parent id
+          schema:
+            type: number
+            format: int64
+        - name: name
+          in: query
+          description: Name of category
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoriesGroupDto"
+  /admin/categories:
+    post:
+      tags:
+        - AdminCategory
+      summary: Admin create category
+      operationId: admin-create-category
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCategoryDto"
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoryDto"
+    put:
+      tags:
+        - AdminCategory
+      summary: Admin update category
+      operationId: admin-update-category
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCategoryDto"
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoryDto"
+    delete:
+      tags:
+        - AdminCategory
+      summary: Admin delete category
+      operationId: admin-delete-category
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoryDto"
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Get users
+      operationId: get-users
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: offset
+          in: query
+          description: Pagination offset
+          schema:
+            type: number
+            format: int32
+            default: 20
+        - name: page
+          in: query
+          description: Pagination limit
+          schema:
+            type: number
+            format: int32
+            default: 1
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageUserDto"
+    put:
+      tags:
+        - Users
+      summary: Update user
+      operationId: update-user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserUpdateDto"
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDto"
+  /admin/categories-group:
+    get:
+      tags:
+        - AdminCategoryGroup
+      summary: admin get category group
+      operationId: get-create-category-group
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: parent
+          in: query
+          description: Parent id
+          schema:
+            type: integer
+            format: int64
+        - name: name
+          in: query
+          description: Search by name of category
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of faq items
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoriesGroupDto"
+    post:
+      tags:
+        - AdminCategoryGroup
+      summary: Admin create category group
+      operationId: admin-create-category-group
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCategoryGroupDto"
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoryGroupDto"
+    put:
+      tags:
+        - AdminCategoryGroup
+      summary: Admin update category group
+      operationId: admin-update-category-group
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCategoryGroupDto"
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoryGroupDto"
+    delete:
+      tags:
+        - AdminCategoryGroup
+      summary: Admin delete category group
+      operationId: admin-delete-category-group
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoryGroupDto"
+  /admin/construction-materials:
+    get:
+      tags:
+        - AdminConstructionMaterials
+      summary: admin get construction materials
+      operationId: admin-get-construction-materials
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: offset
+          in: query
+          description: Pagination offset
+          schema:
+            type: number
+            format: int32
+            default: 20
+        - name: page
+          in: query
+          description: Pagination limit
+          schema:
+            type: number
+            format: int32
+            default: 1
+      responses:
+        "200":
+          description: List of faq items
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageConstructionMaterialDto"
+    post:
+      tags:
+        - AdminConstructionMaterials
+      summary: Admin create construction materials
+      operationId: admin-create-construction-materials
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateConstructionMaterialDto"
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConstructionMaterialDto"
+    put:
+      tags:
+        - AdminConstructionMaterials
+      summary: Admin update construction material
+      operationId: admin-update-construction-material
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateConstructionMaterialDto"
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConstructionMaterialDto"
+    delete:
+      tags:
+        - AdminConstructionMaterial
+      summary: Admin delete construction material
+      operationId: admin-delete-construction-material
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoryGroupDto"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    SimpleApiError:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: Error message
+      description: General chatbot error data
+    LoginDto:
+      type: object
+      required:
+        - login
+        - password
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+    RefreshTokenDto:
+      type: object
+      required:
+        - token
+      properties:
+        token:
+          type: string
+    JwtDto:
+      type: object
+      required:
+        - token
+        - refreshToken
+        - authorities
+        - login
+        - expirationTime
+      properties:
+        token:
+          type: string
+        refreshToken:
+          type: string
+        login:
+          type: string
+        expirationTime:
+          type: integer
+          format: int64
+        authorities:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+    UserRegistrationDto:
+      type: object
+      required:
+        - login
+        - password
+        - firstName
+        - lastName
+        - email
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+    UserDto:
+      type: object
+      required:
+        - id
+        - firstName
+        - lastName
+        - email
+        - login
+        - activate
+      properties:
+        id:
+          type: integer
+          format: int64
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        login:
+          type: string
+        activate:
+          type: boolean
+    CreateConstructionMaterialDto:
+      type: object
+      required:
+        - title
+        - address
+        - price
+        - cityId
+        - categoryId
+        - description
+      properties:
+        title:
+          type: string
+        address:
+          type: string
+        price:
+          type: integer
+        cityId:
+          type: integer
+        description:
+          type: string
+        categoryId:
+          type: integer
+          format: int64
+    ConstructionMaterialDto:
+      type: object
+      required:
+        - id
+        - title
+        - address
+        - price
+        - cityId
+        - categoryId
+        - author
+        - description
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        address:
+          type: string
+        price:
+          type: integer
+        cityId:
+          type: integer
+        description:
+          type: string
+        author:
+          type: integer
+          format: int64
+        categoryId:
+          type: integer
+          format: int64
+    UpdateConstructionMaterialDto:
+      type: object
+      required:
+        - id
+        - title
+        - address
+        - price
+        - cityId
+        - categoryId
+        - author
+        - description
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        address:
+          type: string
+        price:
+          type: integer
+        cityId:
+          type: integer
+        description:
+          type: string
+        author:
+          type: integer
+          format: int64
+        categoryId:
+          type: integer
+          format: int64
+    PageUserDto:
+      type: object
+      required:
+        - meta
+        - items
+      properties:
+        meta:
+          $ref: "#/components/schemas/PaginationMetaDto"
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserDto"
+    PageConstructionMaterialDto:
+      type: object
+      required:
+        - meta
+        - items
+      properties:
+        meta:
+          $ref: "#/components/schemas/PaginationMetaDto"
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConstructionMaterialDto"
+    PaginationMetaDto:
+      type: object
+      required:
+        - totalItems
+        - itemsPerPage
+        - totalPages
+        - currentPage
+      properties:
+        totalItems:
+          description: The total amount of SomeEntity matching the filter conditions
+          type: number
+          format: int32
+        itemsPerPage:
+          description: "The requested items per page (i.e., the limit parameter)"
+          type: number
+          format: int32
+        totalPages:
+          description: The total amount of pages (based on the limit)
+          type: number
+          format: int32
+        currentPage:
+          description: The current page this paginator 'points' to
+          type: number
+          format: int32
+    UserUpdateDto:
+      type: object
+      required:
+        - id
+        - firstName
+        - lastName
+        - email
+      properties:
+        id:
+          type: integer
+          format: int64
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+    CategoryDto:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    CategoryGroupDto:
+      type: object
+      required:
+        - id
+        - category
+      properties:
+        id:
+          type: integer
+          format: int64
+        category:
+          $ref: "#/components/schemas/CategoryDto"
+        parent:
+          $ref: "#/components/schemas/CategoryDto"
+    CategoriesGroupDto:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/CategoryGroupDto"
+    CreateCategoryDto:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+    UpdateCategoryDto:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    CreateCategoryGroupDto:
+      type: object
+      required:
+        - category
+      properties:
+        category:
+          type: integer
+          format: int64
+        parent:
+          type: integer
+          format: int64
+    UpdateCategoryGroupDto:
+      type: object
+      required:
+        - id
+        - category
+      properties:
+        id:
+          type: integer
+          format: int64
+        category:
+          type: integer
+          format: int64
+        parent:
+          type: integer
+          format: int64

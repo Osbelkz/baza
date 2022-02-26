@@ -7,7 +7,6 @@ export const apiInstance = axios.create({
 
 apiInstance.interceptors.request.use(
   function (config) {
-    // Do something before request is sent
     const userToken = window.localStorage.getItem("id_token");
     if (userToken) {
       config.headers!.Authorization = `Bearer ${userToken}`;
@@ -16,7 +15,6 @@ apiInstance.interceptors.request.use(
     return config;
   },
   function (error) {
-    // Do something with request error
     return Promise.reject(error);
   }
 );

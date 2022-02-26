@@ -3,7 +3,7 @@ import React from "react";
 import { ICategory, ICategorySibling } from "../../../shared/api/categories";
 
 interface ICategoriesTableProps {
-  categories: ICategory[];
+  categories?: ICategory[];
 }
 
 export const CategoriesTable: React.FC<ICategoriesTableProps> = ({
