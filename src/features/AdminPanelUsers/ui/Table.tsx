@@ -4,7 +4,7 @@ import { IUser } from "../../../shared/api/users";
 import { deleteUserFx } from "../model";
 
 interface IUsersTableProps {
-  users: IUser[];
+  users?: IUser[];
 }
 
 export const UsersTable: React.FC<IUsersTableProps> = ({ users }) => {
