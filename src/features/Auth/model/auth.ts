@@ -13,5 +13,5 @@ export const auth = (data: LoginDTO): AxiosPromise<AuthResponse> => {
 };
 
 export type AuthResponse = {
-  id_token: string;
+  token: string;
 };

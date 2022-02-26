@@ -43,7 +43,7 @@ const AdminPanelCategories = () => {
           </Button>
         </Form.Item>
       </Form>
-      <CategoriesTable categories={categories} />
+      <CategoriesTable categories={categories?.items} />
     </div>
   );
 };

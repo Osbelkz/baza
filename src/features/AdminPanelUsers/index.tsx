@@ -72,7 +72,7 @@ const AdminPanelUsers = () => {
           </Button>
         </Form.Item>
       </Form>
-      <UsersTable users={users} />
+      {/*<UsersTable users={users} />*/}
     </div>
   );
 };

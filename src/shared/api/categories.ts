@@ -27,7 +27,7 @@ export interface IUpdateCategoryData {
 
 export const categoriesService = {
   getCategories(params: IGetCategoriesParams) {
-    return apiInstance.get<ICategory[]>("categories", { params });
+    return apiInstance.get<{ items: ICategory[] }>("categories", { params });
   },
   createCategory(data: ICreateCategoryData) {
     return apiInstance.post("admin/categories", {

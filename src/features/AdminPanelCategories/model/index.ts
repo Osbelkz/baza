@@ -12,7 +12,7 @@ export const getCategoriesFx = createEffect(
   }
 );
 
-export const $categories = restore(getCategoriesFx.doneData, []);
+export const $categories = restore(getCategoriesFx.doneData, null);
 
 export const createCategoryFx = createEffect(
   async (data: ICreateCategoryData) => {
