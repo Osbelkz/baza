@@ -107,7 +107,7 @@ paths:
           schema:
             type: number
             format: int32
-            default: 1
+            default: 0
       responses:
         200:
           description: successful operation
@@ -227,7 +227,7 @@ paths:
           schema:
             type: number
             format: int32
-            default: 1
+            default: 0
       responses:
         200:
           description: successful operation
@@ -258,7 +258,7 @@ paths:
       tags:
         - AdminCategoryGroup
       summary: admin get category group
-      operationId: get-create-category-group
+      operationId: admin-get-category-group
       security:
         - bearerAuth: []
       parameters:
@@ -364,7 +364,7 @@ paths:
           schema:
             type: number
             format: int32
-            default: 1
+            default: 0
       responses:
         "200":
           description: List of faq items
@@ -441,7 +441,7 @@ components:
       scheme: bearer
       bearerFormat: JWT
   schemas:
-    SimpleApiError:
+    ApiError:
       type: object
       required:
         - message
