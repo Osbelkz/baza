@@ -25,6 +25,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/JwtDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
   /auth/registration:
     post:
       tags:
@@ -44,6 +50,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"        
   /auth/refreshToken:
     post:
       tags:
@@ -63,6 +75,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/JwtDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
   /construction-materials:
     post:
       tags:
@@ -82,6 +100,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ConstructionMaterialDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
     get:
       tags:
         - ConstructionMaterials
@@ -115,6 +139,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/PageConstructionMaterialDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
   /categories:
     get:
       tags:
@@ -142,6 +172,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CategoriesGroupDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
   /admin/categories:
     post:
       tags:
@@ -163,6 +199,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CategoryDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
     put:
       tags:
         - AdminCategory
@@ -183,6 +225,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CategoryDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
     delete:
       tags:
         - AdminCategory
@@ -205,6 +253,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CategoryDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
   /users:
     get:
       tags:
@@ -235,6 +289,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/PageUserDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
     put:
       tags:
         - Users
@@ -253,6 +313,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
   /admin/categories-group:
     get:
       tags:
@@ -280,6 +346,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CategoriesGroupDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
     post:
       tags:
         - AdminCategoryGroup
@@ -300,6 +372,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CategoryGroupDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
     put:
       tags:
         - AdminCategoryGroup
@@ -320,6 +398,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CategoryGroupDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
     delete:
       tags:
         - AdminCategoryGroup
@@ -342,6 +426,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CategoryGroupDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
   /admin/construction-materials:
     get:
       tags:
@@ -372,6 +462,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/PageConstructionMaterialDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
     post:
       tags:
         - AdminConstructionMaterials
@@ -392,6 +488,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ConstructionMaterialDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
     put:
       tags:
         - AdminConstructionMaterials
@@ -412,6 +514,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ConstructionMaterialDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
     delete:
       tags:
         - AdminConstructionMaterial
@@ -434,6 +542,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CategoryGroupDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
 components:
   securitySchemes:
     bearerAuth:
