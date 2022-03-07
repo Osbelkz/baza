@@ -1,9 +1,10 @@
 import { Table } from "antd";
 import React from "react";
-import { ICategory, ICategorySibling } from "../../../shared/api/categories";
+import { ICategorySibling } from "../../../shared/api/categories";
+import { CategoryGroupDto } from "../../../shared/openapi";
 
 interface ICategoriesTableProps {
-  categories?: ICategory[];
+  categories?: CategoryGroupDto[];
 }
 
 export const CategoriesTable: React.FC<ICategoriesTableProps> = ({

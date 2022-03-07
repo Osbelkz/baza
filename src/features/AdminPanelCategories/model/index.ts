@@ -4,10 +4,18 @@ import {
   ICreateCategoryData,
   IGetCategoriesParams,
 } from "../../../shared/api/categories";
+import { AdminCategoryGroupApi } from "../../../shared/openapi";
+import { apiInstance } from "../../../shared/api";
+
+const adminCategoryGroupApi = new AdminCategoryGroupApi(
+  undefined,
+  "https://baza-application.herokuapp.com",
+  apiInstance
+);
 
 export const getCategoriesFx = createEffect(
   async (params: IGetCategoriesParams) => {
-    const response = await categoriesService.getCategories(params);
+    const response = await adminCategoryGroupApi.getCreateCategoryGroup();
     return response.data;
   }
 );

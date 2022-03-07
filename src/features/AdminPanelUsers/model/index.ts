@@ -14,6 +14,14 @@ import {
 } from "../../../shared/api/users";
 import { authService, IRegisterUserData } from "../../../shared/api/auth";
 import { createGate } from "effector-react";
+import { UsersApi } from "shared/openapi";
+import { apiInstance } from "../../../shared/api";
+
+const usersApi = new UsersApi(
+  undefined,
+  "https://baza-application.herokuapp.com",
+  apiInstance
+);
 
 export const registrationUserFx = createEffect(
   async (data: IRegisterUserData) => {
@@ -23,7 +31,7 @@ export const registrationUserFx = createEffect(
 );
 
 export const getUsersFx = createEffect(async (params?: IGetUsersParams) => {
-  const response = await usersService.getUsers(params);
+  const response = await usersApi.getUsers(params?.offset, params?.pageNumber);
   return response.data;
 });
 
