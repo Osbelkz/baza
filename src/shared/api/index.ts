@@ -1,5 +1,5 @@
 import axios from "axios";
-export const API_AUTH_URL = "https://baza-application.herokuapp.com/";
+export const API_AUTH_URL = "https://baza-application.herokuapp.com";
 
 export const apiInstance = axios.create({
   baseURL: API_AUTH_URL,

@@ -200,7 +200,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApiError"
-  /categories:
+  /categories-group:
     get:
       tags:
         - Categories group
@@ -234,6 +234,32 @@ paths:
               schema:
                 $ref: "#/components/schemas/ApiError"
   /admin/categories:
+    get:
+      tags:
+        - Categories
+      summary: Get categories
+      operationId: get-categories
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: name
+          in: query
+          description: Name of category
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoriesDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
     post:
       tags:
         - AdminCategory
@@ -375,38 +401,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/ApiError"
   /admin/categories-group:
-    get:
-      tags:
-        - AdminCategoryGroup
-      summary: admin get category group
-      operationId: admin-get-category-group
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: parent
-          in: query
-          description: Parent id
-          schema:
-            type: integer
-            format: int64
-        - name: name
-          in: query
-          description: Search by name of category
-          schema:
-            type: string
-      responses:
-        "200":
-          description: List of faq items
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CategoriesGroupDto"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ApiError"
     post:
       tags:
         - AdminCategoryGroup
@@ -819,6 +813,15 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/CategoryGroupDto"
+    CategoriesDto:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/CategoryDto"
     CreateCategoryDto:
       type: object
       required:

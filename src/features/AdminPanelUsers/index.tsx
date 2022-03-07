@@ -9,7 +9,7 @@ import {
   registrationUserFx,
 } from "./model";
 import { UsersTable } from "./ui/Table";
-import { IRegisterUserData } from "../../shared/api/auth";
+import { UserRegistrationDto } from "shared/openapi";
 
 const AdminPanelUsers = () => {
   const users = useStore($users);
@@ -20,7 +20,7 @@ const AdminPanelUsers = () => {
 
   useGate(GetUsersGate);
 
-  const registationUser = async (data: IRegisterUserData) => {
+  const registationUser = async (data: UserRegistrationDto) => {
     await registrationUserFx(data);
     form.resetFields();
   };

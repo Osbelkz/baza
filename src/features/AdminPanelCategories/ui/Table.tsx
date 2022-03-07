@@ -1,6 +1,5 @@
 import { Table } from "antd";
 import React from "react";
-import { ICategorySibling } from "../../../shared/api/categories";
 import { CategoryGroupDto } from "../../../shared/openapi";
 
 interface ICategoriesTableProps {
@@ -19,22 +18,22 @@ export const CategoriesTable: React.FC<ICategoriesTableProps> = ({
     {
       title: "category id",
       dataIndex: "category",
-      render: (category: ICategorySibling) => category.id,
+      render: (category: CategoryGroupDto) => category.id,
     },
     {
       title: "category name",
       dataIndex: "category name",
-      render: (category: ICategorySibling) => category.name,
+      render: (category: CategoryGroupDto) => category.category.name,
     },
     {
       title: "parent id",
       dataIndex: "parent",
-      render: (parent: ICategorySibling) => parent.id,
+      render: (parent: CategoryGroupDto) => parent.id,
     },
     {
       title: "parent name",
       dataIndex: "parent",
-      render: (parent: ICategorySibling) => parent.name,
+      render: (parent: CategoryGroupDto) => parent.category.name,
     },
   ];
 

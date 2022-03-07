@@ -1,10 +1,9 @@
 import { Button, Checkbox, Space, Table } from "antd";
 import React from "react";
-import { IUser } from "../../../shared/api/users";
-import { deleteUserFx } from "../model";
+import { UserDto } from "../../../shared/openapi";
 
 interface IUsersTableProps {
-  users?: IUser[];
+  users?: UserDto[];
 }
 
 export const UsersTable: React.FC<IUsersTableProps> = ({ users }) => {
@@ -37,16 +36,14 @@ export const UsersTable: React.FC<IUsersTableProps> = ({ users }) => {
     {
       title: "activate",
       key: "activate",
-      render: (user: IUser) => <Checkbox checked={user.activate} />,
+      render: (user: UserDto) => <Checkbox checked={user.activate} />,
     },
     {
       title: "delete",
       key: "delete",
-      render: (user: IUser) => (
+      render: (user: UserDto) => (
         <Space size="middle">
-          <Button onClick={() => deleteUserFx({ userId: user.id })}>
-            delete
-          </Button>
+          <Button onClick={() => {}}>delete</Button>
         </Space>
       ),
     },
