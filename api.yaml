@@ -400,6 +400,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApiError"
+    delete:
+      tags:
+        - Users
+      summary: Delete user
+      operationId: delete-user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserDeleteDto"
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDeleteDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
   /admin/categories-group:
     post:
       tags:
@@ -864,6 +888,14 @@ components:
           type: integer
           format: int64
         parent:
+          type: integer
+          format: int64
+    UserDeleteDto:
+      type: object
+      required:
+        - id
+      properties:
+        id:
           type: integer
           format: int64
     CreateItemDto:
