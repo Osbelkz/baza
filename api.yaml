@@ -106,32 +106,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApiError"
-    put:
-      tags:
-        - Items
-      summary: Update item
-      operationId: update-item
-      security:
-        - bearerAuth: [ ]
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UpdateItemDto"
-        required: true
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ItemDto"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ApiError"
     get:
       tags:
         - Items
@@ -159,6 +133,67 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/PageItemDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /items/{itemId}:
+    get:
+      tags:
+        - Get item
+      summary: get item by id
+      operationId: getItemById
+      parameters:
+        - name: itemId
+          in: path
+          description: Item id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+    put:
+      tags:
+        - Update item
+      summary: Update item
+      operationId: update-item
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: itemId
+          in: path
+          description: Item id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateItemDto"
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemDto"
         "400":
           description: Bad Request
           content:
