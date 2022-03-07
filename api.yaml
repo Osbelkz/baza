@@ -25,6 +25,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/JwtDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
   /auth/registration:
     post:
       tags:
@@ -44,6 +50,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"        
   /auth/refreshToken:
     post:
       tags:
@@ -63,17 +75,23 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/JwtDto"
-  /construction-materials:
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /items:
     post:
       tags:
-        - ConstructionMaterials
-      summary: Create construction materials
-      operationId: create-construction-materials
+        - Items
+      summary: Create item
+      operationId: create-item
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateConstructionMaterialDto"
+              $ref: "#/components/schemas/CreateItemDto"
         required: true
       responses:
         200:
@@ -81,18 +99,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ConstructionMaterialDto"
+                $ref: "#/components/schemas/ItemDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
     get:
       tags:
-        - ConstructionMaterials
-      summary: Get construction materials
-      operationId: get-construction-materials
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreateConstructionMaterialDto"
-        required: true
+        - Items
+      summary: Get items
+      operationId: get-items
       parameters:
         - name: offset
           in: query
@@ -107,14 +125,81 @@ paths:
           schema:
             type: number
             format: int32
-            default: 1
+            default: 0
       responses:
         200:
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PageConstructionMaterialDto"
+                $ref: "#/components/schemas/PageItemDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /items/{itemId}:
+    get:
+      tags:
+        - Get item
+      summary: get item by id
+      operationId: getItemById
+      parameters:
+        - name: itemId
+          in: path
+          description: Item id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+    put:
+      tags:
+        - Update item
+      summary: Update item
+      operationId: update-item
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: itemId
+          in: path
+          description: Item id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateItemDto"
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
   /categories:
     get:
       tags:
@@ -142,6 +227,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CategoriesGroupDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
   /admin/categories:
     post:
       tags:
@@ -163,6 +254,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CategoryDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
     put:
       tags:
         - AdminCategory
@@ -183,6 +280,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CategoryDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
     delete:
       tags:
         - AdminCategory
@@ -205,6 +308,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CategoryDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
   /users:
     get:
       tags:
@@ -227,7 +336,7 @@ paths:
           schema:
             type: number
             format: int32
-            default: 1
+            default: 0
       responses:
         200:
           description: successful operation
@@ -235,6 +344,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/PageUserDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
     put:
       tags:
         - Users
@@ -253,12 +368,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
   /admin/categories-group:
     get:
       tags:
         - AdminCategoryGroup
       summary: admin get category group
-      operationId: get-create-category-group
+      operationId: admin-get-category-group
       security:
         - bearerAuth: []
       parameters:
@@ -280,6 +401,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CategoriesGroupDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
     post:
       tags:
         - AdminCategoryGroup
@@ -300,6 +427,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CategoryGroupDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
     put:
       tags:
         - AdminCategoryGroup
@@ -320,6 +453,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CategoryGroupDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
     delete:
       tags:
         - AdminCategoryGroup
@@ -342,12 +481,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CategoryGroupDto"
-  /admin/construction-materials:
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /admin/items:
     get:
       tags:
-        - AdminConstructionMaterials
-      summary: admin get construction materials
-      operationId: admin-get-construction-materials
+        - AdminItems
+      summary: admin get items
+      operationId: admin-get-items
       security:
         - bearerAuth: []
       parameters:
@@ -364,26 +509,32 @@ paths:
           schema:
             type: number
             format: int32
-            default: 1
+            default: 0
       responses:
         "200":
-          description: List of faq items
+          description: List of items
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PageConstructionMaterialDto"
+                $ref: "#/components/schemas/PageItemDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
     post:
       tags:
-        - AdminConstructionMaterials
-      summary: Admin create construction materials
-      operationId: admin-create-construction-materials
+        - AdminItems
+      summary: Admin create items
+      operationId: admin-create-item
       security:
         - bearerAuth: [ ]
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateConstructionMaterialDto"
+              $ref: "#/components/schemas/CreateItemDto"
         required: true
       responses:
         200:
@@ -391,19 +542,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ConstructionMaterialDto"
+                $ref: "#/components/schemas/ItemDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
     put:
       tags:
-        - AdminConstructionMaterials
-      summary: Admin update construction material
-      operationId: admin-update-construction-material
+        - AdminItems
+      summary: Admin update item
+      operationId: admin-update-item
       security:
         - bearerAuth: [ ]
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateConstructionMaterialDto"
+              $ref: "#/components/schemas/UpdateItemDto"
         required: true
       responses:
         200:
@@ -411,12 +568,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ConstructionMaterialDto"
+                $ref: "#/components/schemas/ItemDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
     delete:
       tags:
-        - AdminConstructionMaterial
-      summary: Admin delete construction material
-      operationId: admin-delete-construction-material
+        - AdminItems
+      summary: Admin delete item
+      operationId: admin-delete-item
       security:
         - bearerAuth: [ ]
       parameters:
@@ -433,7 +596,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CategoryGroupDto"
+                $ref: "#/components/schemas/DeleteItemDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
 components:
   securitySchemes:
     bearerAuth:
@@ -441,7 +610,7 @@ components:
       scheme: bearer
       bearerFormat: JWT
   schemas:
-    SimpleApiError:
+    ApiError:
       type: object
       required:
         - message
@@ -533,90 +702,25 @@ components:
         activate:
           type: boolean
     CreateConstructionMaterialDto:
+      allOf:
+        - $ref: "#/components/schemas/CreateItemDto"
       type: object
-      required:
-        - title
-        - address
-        - price
-        - cityId
-        - categoryId
-        - description
-      properties:
-        title:
-          type: string
-        address:
-          type: string
-        price:
-          type: integer
-        cityId:
-          type: integer
-        description:
-          type: string
-        categoryId:
-          type: integer
-          format: int64
     ConstructionMaterialDto:
+      allOf:
+        - $ref: "#/components/schemas/ItemDto"
+      type: object
+    DeleteItemDto:
       type: object
       required:
         - id
-        - title
-        - address
-        - price
-        - cityId
-        - categoryId
-        - author
-        - description
       properties:
         id:
-          type: integer
-          format: int64
-        title:
-          type: string
-        address:
-          type: string
-        price:
-          type: integer
-        cityId:
-          type: integer
-        description:
-          type: string
-        author:
-          type: integer
-          format: int64
-        categoryId:
           type: integer
           format: int64
     UpdateConstructionMaterialDto:
+      allOf:
+        - $ref: "#/components/schemas/UpdateItemDto"
       type: object
-      required:
-        - id
-        - title
-        - address
-        - price
-        - cityId
-        - categoryId
-        - author
-        - description
-      properties:
-        id:
-          type: integer
-          format: int64
-        title:
-          type: string
-        address:
-          type: string
-        price:
-          type: integer
-        cityId:
-          type: integer
-        description:
-          type: string
-        author:
-          type: integer
-          format: int64
-        categoryId:
-          type: integer
-          format: int64
     PageUserDto:
       type: object
       required:
@@ -629,7 +733,7 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/UserDto"
-    PageConstructionMaterialDto:
+    PageItemDto:
       type: object
       required:
         - meta
@@ -640,7 +744,7 @@ components:
         items:
           type: array
           items:
-            $ref: "#/components/schemas/ConstructionMaterialDto"
+            $ref: "#/components/schemas/ItemDto"
     PaginationMetaDto:
       type: object
       required:
@@ -759,3 +863,119 @@ components:
         parent:
           type: integer
           format: int64
+    CreateItemDto:
+      type: object
+      description: parent object for create item(construction material etc)
+      required:
+        - title
+        - address
+        - price
+        - cityId
+        - categoryId
+        - description
+        - type
+      properties:
+        title:
+          type: string
+        address:
+          type: string
+        price:
+          type: integer
+        cityId:
+          type: integer
+        description:
+          type: string
+        categoryId:
+          type: integer
+          format: int64
+        type:
+          type: string
+          description: Discriminator
+          discriminator:
+            propertyName: type
+            mapping:
+              ConstructionMaterialDto: "#/components/schemas/CreateConstructionMaterialDto"
+      discriminator:
+        propertyName: item
+        mapping:
+          CONSTRUCTION_MATERIAL: "#/components/schemas/CreateConstructionMaterialDto"
+    UpdateItemDto:
+      type: object
+      description: parent object for update item(construction material etc)
+      required:
+        - id
+        - title
+        - address
+        - price
+        - cityId
+        - categoryId
+        - author
+        - description
+        - type
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        address:
+          type: string
+        price:
+          type: integer
+        cityId:
+          type: integer
+        description:
+          type: string
+        author:
+          type: integer
+          format: int64
+        categoryId:
+          type: integer
+          format: int64
+        type:
+          type: string
+          description: Discriminator
+      discriminator:
+        propertyName: type
+        mapping:
+          UpdateConstructionMaterialDto: "#/components/schemas/UpdateConstructionMaterialDto"
+    ItemDto:
+      description: parent object for item(construction material etc)
+      type: object
+      required:
+        - id
+        - title
+        - address
+        - price
+        - cityId
+        - categoryId
+        - author
+        - description
+        - type
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        address:
+          type: string
+        price:
+          type: integer
+        cityId:
+          type: integer
+        description:
+          type: string
+        author:
+          type: integer
+          format: int64
+        categoryId:
+          type: integer
+          format: int64
+        type:
+          type: string
+          description: Discriminator
+      discriminator:
+        propertyName: type
+        mapping:
+          ConstructionMaterialDto: "#/components/schemas/ConstructionMaterialDto"
