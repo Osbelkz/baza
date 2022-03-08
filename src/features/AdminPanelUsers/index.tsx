@@ -5,11 +5,12 @@ import {
   $addUserModalVisibility,
   $users,
   addUserModalApi,
+  deleteUserFx,
   GetUsersGate,
   registrationUserFx,
 } from "./model";
 import { UsersTable } from "./ui/Table";
-import { IRegisterUserData } from "../../shared/api/auth";
+import { UserDeleteDto, UserRegistrationDto } from "shared/openapi";
 
 const AdminPanelUsers = () => {
   const users = useStore($users);
@@ -20,9 +21,13 @@ const AdminPanelUsers = () => {
 
   useGate(GetUsersGate);
 
-  const registationUser = async (data: IRegisterUserData) => {
+  const createUser = async (data: UserRegistrationDto) => {
     await registrationUserFx(data);
     form.resetFields();
+  };
+
+  const deleteUser = async (data: UserDeleteDto) => {
+    await deleteUserFx(data);
   };
 
   return (
@@ -54,12 +59,12 @@ const AdminPanelUsers = () => {
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 20 }}
           initialValues={{ remember: true }}
-          onFinish={registationUser}
+          onFinish={createUser}
         >
           <Form.Item
             label="email"
             name="email"
-            rules={[{ required: true, message: "!" }]}
+            rules={[{ type: "email", required: true, message: "!" }]}
           >
             <Input />
           </Form.Item>
@@ -94,7 +99,7 @@ const AdminPanelUsers = () => {
           </Form.Item>
         </Form>
       </Modal>
-      <UsersTable users={users?.items} />
+      <UsersTable users={users?.items} deleteUser={deleteUser} />
     </Space>
   );
 };

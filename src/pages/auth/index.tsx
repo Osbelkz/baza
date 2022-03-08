@@ -3,10 +3,10 @@ import { Button, Form, Input } from "antd";
 import styled from "styled-components";
 import { authUserFx } from "features/Auth/model";
 import { useStore } from "effector-react";
-import { LoginDTO } from "../../features/Auth/model/models";
 import { $app } from "../../shared/models/app";
 import { useLocation, useNavigate } from "react-router-dom";
 import paths from "../../shared/routes/paths";
+import { LoginDto } from "../../shared/openapi";
 
 const ViewStyled = styled.div`
   min-height: 100vh;
@@ -23,7 +23,7 @@ const AdminLoginPage: React.FC<AdminLoginPageProps> = () => {
   const navigate = useNavigate();
   console.log("admin login page");
 
-  const onFinish = (values: LoginDTO) => {
+  const onFinish = (values: LoginDto) => {
     authUserFx(values);
     console.log("Success:", values);
   };

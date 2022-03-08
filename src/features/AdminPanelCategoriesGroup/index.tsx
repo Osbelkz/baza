@@ -1,19 +1,18 @@
 import { Button, Form, Input } from "antd";
 import React, { useEffect } from "react";
 import { useStore } from "effector-react";
-import { $categories, createCategoryFx, getCategoriesFx } from "./model";
-import { ICreateCategoryData } from "../../shared/api/categories";
+import { $categories, getCategoriesFx } from "./model";
+import { CategoriesTable } from "./ui/Table";
+import { CreateCategoryDto } from "shared/openapi";
 
-const AdminPanelCategoriesGroup = () => {
+const AdminPanelCategories = () => {
   const categories = useStore($categories);
 
   useEffect(() => {
-    getCategoriesFx({});
+    getCategoriesFx();
   }, []);
 
-  const createCategory = (data: ICreateCategoryData) => {
-    createCategoryFx(data);
-  };
+  const createCategory = (data: CreateCategoryDto) => {};
 
   console.log(categories);
 
@@ -30,16 +29,8 @@ const AdminPanelCategoriesGroup = () => {
       >
         <Form.Item
           label="наименование новой категории"
-          name="category"
+          name="name"
           rules={[{ required: true, message: "!" }]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="наименование категории родителя"
-          name="parent"
-          rules={[{ required: false, message: "!" }]}
         >
           <Input />
         </Form.Item>
@@ -50,8 +41,9 @@ const AdminPanelCategoriesGroup = () => {
           </Button>
         </Form.Item>
       </Form>
+      <CategoriesTable categories={[]} />
     </div>
   );
 };
 
-export default AdminPanelCategoriesGroup;
+export default AdminPanelCategories;

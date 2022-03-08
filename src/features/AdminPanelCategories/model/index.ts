@@ -1,28 +1,37 @@
 import { createEffect, restore, sample } from "effector";
-import {
-  categoriesService,
-  ICreateCategoryData,
-  IGetCategoriesParams,
-} from "../../../shared/api/categories";
+import { adminCategoryApi, categoriesApi } from "shared/api/api.instances";
+import { CreateCategoryDto, UpdateCategoryDto } from "../../../shared/openapi";
 
 export const getCategoriesFx = createEffect(
-  async (params: IGetCategoriesParams) => {
-    const response = await categoriesService.getCategories(params);
+  async (params?: { parent?: number; name?: string }) => {
+    const response = await categoriesApi.getCategories(params?.name);
     return response.data;
   }
 );
 
 export const $categories = restore(getCategoriesFx.doneData, null);
 
-export const createCategoryFx = createEffect(
-  async (data: ICreateCategoryData) => {
-    const response = await categoriesService.createCategory(data);
+export const createAdminCategoryFx = createEffect(
+  async (data: CreateCategoryDto) => {
+    const response = await adminCategoryApi.adminCreateCategory(data);
     return response.data;
   }
 );
 
+export const updateAdminCategoryFx = createEffect(
+  async (data: UpdateCategoryDto) => {
+    const response = await adminCategoryApi.adminUpdateCategory(data);
+    return response.data;
+  }
+);
+
+export const deleteAdminCategoryFx = createEffect(async (id: number) => {
+  const response = await adminCategoryApi.adminDeleteCategory(id);
+  return response.data;
+});
+
 sample({
-  source: createCategoryFx.doneData,
-  fn: () => ({}),
+  source: createAdminCategoryFx.doneData,
+  fn: () => {},
   target: getCategoriesFx,
 });
