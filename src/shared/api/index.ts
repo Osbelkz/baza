@@ -28,16 +28,17 @@ apiInstance.interceptors.response.use(
     const originalRequest = error.config;
     if (error.response.status === 401 && !originalRequest._retry) {
       const refreshToken = window.localStorage.getItem("refresh_token");
-      if (refreshToken) {
-        originalRequest._retry = true;
-        const token = await authApi.refreshAccessToken({
-          token: refreshToken,
-        });
-        window.localStorage.setItem("id_token", token.data.token);
-        window.localStorage.setItem("refresh_token", token.data.refreshToken);
-        originalRequest.headers!.Authorization = "Bearer " + token.data.token;
-        return apiInstance(originalRequest);
-      }
+      originalRequest.headers!.Authorization = ``;
+      // if (refreshToken) {
+      //   originalRequest._retry = true;
+      //   const token = await authApi.refreshAccessToken({
+      //     token: refreshToken,
+      //   });
+      //   window.localStorage.setItem("id_token", token.data.token);
+      //   window.localStorage.setItem("refresh_token", token.data.refreshToken);
+      //   originalRequest.headers!.Authorization = "Bearer " + token.data.token;
+      //   return apiInstance(originalRequest);
+      // }
     }
     return Promise.reject(error);
   }

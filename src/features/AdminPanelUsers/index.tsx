@@ -1,6 +1,6 @@
 import React from "react";
 import { useGate, useStore } from "effector-react";
-import { Button, Form, Input, Modal, Space } from "antd";
+import { Button, Form, Space } from "antd";
 import {
   $addUserModalVisibility,
   $users,
@@ -9,8 +9,8 @@ import {
   GetUsersGate,
   registrationUserFx,
 } from "./model";
-import { UsersTable } from "./ui/Table";
 import { UserDeleteDto, UserRegistrationDto } from "shared/openapi";
+import { CreateUserModal, UsersTable } from "./ui";
 
 const AdminPanelUsers = () => {
   const users = useStore($users);
@@ -35,70 +35,12 @@ const AdminPanelUsers = () => {
       <Button type="primary" onClick={() => addUserModalApi.open()}>
         Создать пользователя
       </Button>
-      <Modal
-        title="Basic Modal"
-        visible={addUsersModalVisible}
-        onCancel={() => addUserModalApi.close()}
-        footer={[
-          <Button
-            loading={isAddUserLoading}
-            form="addUserForm"
-            key="submit"
-            htmlType="submit"
-          >
-            Создать
-          </Button>,
-        ]}
-      >
-        <Form
-          form={form}
-          id={"addUserForm"}
-          name="user registration"
-          autoComplete="off"
-          size={"middle"}
-          labelCol={{ span: 4 }}
-          wrapperCol={{ span: 20 }}
-          initialValues={{ remember: true }}
-          onFinish={createUser}
-        >
-          <Form.Item
-            label="email"
-            name="email"
-            rules={[{ type: "email", required: true, message: "!" }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="firstName"
-            name="firstName"
-            rules={[{ required: true, message: "!" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="lastName"
-            name="lastName"
-            rules={[{ required: true, message: "!" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="login"
-            name="login"
-            rules={[{ required: true, message: "!" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="password"
-            name="password"
-            rules={[{ required: true, message: "!" }]}
-          >
-            <Input.Password />
-          </Form.Item>
-        </Form>
-      </Modal>
+      <CreateUserModal
+        isLoading={isAddUserLoading}
+        createUser={createUser}
+        modalVisible={addUsersModalVisible}
+        closeModal={addUserModalApi.close}
+      />
       <UsersTable users={users?.items} deleteUser={deleteUser} />
     </Space>
   );

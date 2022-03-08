@@ -1,6 +1,6 @@
 import { Button, Checkbox, Space, Table } from "antd";
 import React from "react";
-import { UserDeleteDto, UserDto } from "../../../shared/openapi";
+import { UserDeleteDto, UserDto } from "shared/openapi";
 
 interface IUsersTableProps {
   users?: UserDto[];
