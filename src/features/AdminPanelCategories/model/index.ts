@@ -1,9 +1,19 @@
-import { createEffect, restore, sample } from "effector";
+import {
+  createEffect,
+  createEvent,
+  createStore,
+  restore,
+  sample,
+} from "effector";
 import { adminCategoryApi, categoriesApi } from "shared/api/api.instances";
-import { CreateCategoryDto, UpdateCategoryDto } from "../../../shared/openapi";
+import {
+  CategoryDto,
+  CreateCategoryDto,
+  UpdateCategoryDto,
+} from "../../../shared/openapi";
 
 export const getCategoriesFx = createEffect(
-  async (params?: { parent?: number; name?: string }) => {
+  async (params?: { name?: string }) => {
     const response = await categoriesApi.getCategories(params?.name);
     return response.data;
   }
@@ -30,8 +40,31 @@ export const deleteAdminCategoryFx = createEffect(async (id: number) => {
   return response.data;
 });
 
+export const openUpdateCategoryModal = createEvent<number>();
+export const closeUpdateCategoryModal = createEvent();
+export const $updateCategoryModalVisibility = createStore(false)
+  .on(openUpdateCategoryModal, () => true)
+  .reset([closeUpdateCategoryModal, updateAdminCategoryFx.doneData]);
+
+export const setCategoryForUpdate = createEvent<CategoryDto | null>();
+export const $categoryForUpdate = createStore<CategoryDto | null>(null)
+  .on(setCategoryForUpdate, (_, payload) => payload)
+  .reset([closeUpdateCategoryModal, updateAdminCategoryFx.doneData]);
+
 sample({
-  source: createAdminCategoryFx.doneData,
+  clock: openUpdateCategoryModal,
+  source: $categories,
+  fn: (source, clock) =>
+    source?.items.find((category) => category.id === clock) ?? null,
+  target: setCategoryForUpdate,
+});
+
+sample({
+  clock: [
+    createAdminCategoryFx.doneData,
+    updateAdminCategoryFx.doneData,
+    deleteAdminCategoryFx.doneData,
+  ],
   fn: () => {},
   target: getCategoriesFx,
 });

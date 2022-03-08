@@ -1,12 +1,25 @@
 import { Button, Form, Input } from "antd";
 import React, { useEffect } from "react";
 import { useStore } from "effector-react";
-import { $categories, createAdminCategoryFx, getCategoriesFx } from "./model";
-import { CategoriesTable } from "./ui/Table";
-import { CreateCategoryDto } from "shared/openapi";
+import {
+  $categories,
+  $categoryForUpdate,
+  $updateCategoryModalVisibility,
+  closeUpdateCategoryModal,
+  createAdminCategoryFx,
+  deleteAdminCategoryFx,
+  getCategoriesFx,
+  openUpdateCategoryModal,
+  updateAdminCategoryFx,
+} from "./model";
+import { CreateCategoryDto, UpdateCategoryDto } from "shared/openapi";
+import { CategoriesTable, UpdateCategoryModal } from "./ui";
 
 const AdminPanelCategories = () => {
   const categories = useStore($categories);
+  const isUpdateCategoryModalVisible = useStore($updateCategoryModalVisibility);
+  const isUpdateCategoryLoading = useStore(updateAdminCategoryFx.pending);
+  const categoryForUpdate = useStore($categoryForUpdate);
 
   useEffect(() => {
     getCategoriesFx();
@@ -14,6 +27,14 @@ const AdminPanelCategories = () => {
 
   const createCategory = (data: CreateCategoryDto) => {
     createAdminCategoryFx(data);
+  };
+
+  const deleteCategory = (id: number) => {
+    deleteAdminCategoryFx(id);
+  };
+
+  const updateCategory = (data: UpdateCategoryDto) => {
+    updateAdminCategoryFx(data);
   };
 
   console.log(categories);
@@ -43,7 +64,18 @@ const AdminPanelCategories = () => {
           </Button>
         </Form.Item>
       </Form>
-      <CategoriesTable categories={categories?.items} />
+      <CategoriesTable
+        categories={categories?.items}
+        deleteCategory={deleteCategory}
+        openUpdateModal={openUpdateCategoryModal}
+      />
+      <UpdateCategoryModal
+        modalVisible={isUpdateCategoryModalVisible}
+        isLoading={isUpdateCategoryLoading}
+        updateCategory={updateCategory}
+        closeModal={closeUpdateCategoryModal}
+        categoryForUpdate={categoryForUpdate}
+      />
     </div>
   );
 };
