@@ -1,12 +1,16 @@
 import { Button, Checkbox, Space, Table } from "antd";
 import React from "react";
-import { UserDto } from "../../../shared/openapi";
+import { UserDeleteDto, UserDto } from "../../../shared/openapi";
 
 interface IUsersTableProps {
   users?: UserDto[];
+  deleteUser: (data: UserDeleteDto) => void;
 }
 
-export const UsersTable: React.FC<IUsersTableProps> = ({ users }) => {
+export const UsersTable: React.FC<IUsersTableProps> = ({
+  users,
+  deleteUser,
+}) => {
   const columns = [
     {
       title: "id",
@@ -43,7 +47,7 @@ export const UsersTable: React.FC<IUsersTableProps> = ({ users }) => {
       key: "delete",
       render: (user: UserDto) => (
         <Space size="middle">
-          <Button onClick={() => {}}>delete</Button>
+          <Button onClick={() => deleteUser({ id: user.id })}>delete</Button>
         </Space>
       ),
     },

@@ -1,15 +1,6 @@
 import { createEffect, restore, sample } from "effector";
-import {
-  adminCategoryApi,
-  adminCategoryGroupApi,
-  categoriesApi,
-} from "shared/api/api.instances";
-import {
-  CreateCategoryDto,
-  CreateCategoryGroupDto,
-  UpdateCategoryDto,
-  UpdateCategoryGroupDto,
-} from "../../../shared/openapi";
+import { adminCategoryApi, categoriesApi } from "shared/api/api.instances";
+import { CreateCategoryDto, UpdateCategoryDto } from "../../../shared/openapi";
 
 export const getCategoriesFx = createEffect(
   async (params?: { parent?: number; name?: string }) => {
@@ -36,25 +27,6 @@ export const updateAdminCategoryFx = createEffect(
 
 export const deleteAdminCategoryFx = createEffect(async (id: number) => {
   const response = await adminCategoryApi.adminDeleteCategory(id);
-  return response.data;
-});
-
-export const createCategoryGroupFx = createEffect(
-  async (data: CreateCategoryGroupDto) => {
-    const response = await adminCategoryGroupApi.adminCreateCategoryGroup(data);
-    return response.data;
-  }
-);
-
-export const updateCategoryGroupFx = createEffect(
-  async (data: UpdateCategoryGroupDto) => {
-    const response = await adminCategoryGroupApi.adminUpdateCategoryGroup(data);
-    return response.data;
-  }
-);
-
-export const deleteCategoryGroupFx = createEffect(async (id: number) => {
-  const response = await adminCategoryGroupApi.adminDeleteCategoryGroup(id);
   return response.data;
 });
 

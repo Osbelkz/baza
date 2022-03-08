@@ -8,7 +8,11 @@ import {
 } from "effector";
 import { createGate } from "effector-react";
 import { adminUsersApi, authApi } from "shared/api/api.instances";
-import { UserRegistrationDto, UserUpdateDto } from "shared/openapi";
+import {
+  UserDeleteDto,
+  UserRegistrationDto,
+  UserUpdateDto,
+} from "shared/openapi";
 
 export const registrationUserFx = createEffect(
   async (data: UserRegistrationDto) => {
@@ -31,9 +35,9 @@ export const updateUserFx = createEffect(async (data: UserUpdateDto) => {
   return response;
 });
 
-export const deleteUserFx = createEffect(async (params: null) => {
-  // const response = await adminUsersApi.updateUser(params);
-  // return response;
+export const deleteUserFx = createEffect(async (params: UserDeleteDto) => {
+  const response = await adminUsersApi.deleteUser(params);
+  return response;
 });
 
 export const $addUserModalVisibility = createStore(false);

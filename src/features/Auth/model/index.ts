@@ -8,6 +8,7 @@ export const authUserFx = createEffect(async (data: LoginDto) => {
     headers: { Authorization: "" },
   });
   window.localStorage.setItem("id_token", response.data.token);
+  window.localStorage.setItem("refresh_token", response.data.refreshToken);
   console.log(response.data);
 
   return response.data;

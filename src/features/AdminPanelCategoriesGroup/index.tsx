@@ -1,7 +1,7 @@
 import { Button, Form, Input } from "antd";
 import React, { useEffect } from "react";
 import { useStore } from "effector-react";
-import { $categories, createAdminCategoryFx, getCategoriesFx } from "./model";
+import { $categories, getCategoriesFx } from "./model";
 import { CategoriesTable } from "./ui/Table";
 import { CreateCategoryDto } from "shared/openapi";
 
@@ -12,9 +12,7 @@ const AdminPanelCategories = () => {
     getCategoriesFx();
   }, []);
 
-  const createCategory = (data: CreateCategoryDto) => {
-    createAdminCategoryFx(data);
-  };
+  const createCategory = (data: CreateCategoryDto) => {};
 
   console.log(categories);
 
@@ -43,7 +41,7 @@ const AdminPanelCategories = () => {
           </Button>
         </Form.Item>
       </Form>
-      <CategoriesTable categories={categories?.items} />
+      <CategoriesTable categories={[]} />
     </div>
   );
 };
