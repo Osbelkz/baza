@@ -1,6 +1,6 @@
 import axios from "axios";
 import { authApi } from "./api.instances";
-export const API_AUTH_URL = "https://baza-application.herokuapp.com";
+export const API_AUTH_URL = process.env.API_HOST;
 
 export const apiInstance = axios.create({
   baseURL: API_AUTH_URL,
