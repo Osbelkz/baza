@@ -89,10 +89,20 @@ paths:
       operationId: create-item
       requestBody:
         content:
-          application/json:
+          multipart/form-data:
             schema:
-              $ref: "#/components/schemas/CreateItemDto"
-        required: true
+              type: object
+              properties:
+                createItemDto:
+                  $ref: "#/components/schemas/CreateItemDto"
+                images:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+              required:
+                - createItemDto
+                - images
       responses:
         200:
           description: successful operation
@@ -183,9 +193,20 @@ paths:
             format: int64
       requestBody:
         content:
-          application/json:
+          multipart/form-data:
             schema:
-              $ref: "#/components/schemas/UpdateItemDto"
+              type: object
+              properties:
+                updateItemDto:
+                  $ref: "#/components/schemas/UpdateItemDto"
+                images:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+              required:
+                - updateItemDto
+                - images
         required: true
       responses:
         200:
@@ -435,6 +456,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApiError"
+
   /admin/categories-group:
     post:
       tags:
@@ -561,10 +583,20 @@ paths:
         - bearerAuth: [ ]
       requestBody:
         content:
-          application/json:
+          multipart/form-data:
             schema:
-              $ref: "#/components/schemas/CreateItemDto"
-        required: true
+              type: object
+              properties:
+                createItemDto:
+                  $ref: "#/components/schemas/CreateItemDto"
+                images:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+              required:
+                - createItemDto
+                - images
       responses:
         200:
           description: successful operation
@@ -587,10 +619,20 @@ paths:
         - bearerAuth: [ ]
       requestBody:
         content:
-          application/json:
+          multipart/form-data:
             schema:
-              $ref: "#/components/schemas/UpdateItemDto"
-        required: true
+              type: object
+              properties:
+                updateItemDto:
+                  $ref: "#/components/schemas/UpdateItemDto"
+                images:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+              required:
+                - updateItemDto
+                - images
       responses:
         200:
           description: successful operation
@@ -985,6 +1027,17 @@ components:
         propertyName: type
         mapping:
           UpdateConstructionMaterialDto: "#/components/schemas/UpdateConstructionMaterialDto"
+    ImageDto:
+      description: parent object for item(construction material etc)
+      type: object
+      required:
+        - id
+        - imageUrl
+      properties:
+        id:
+          type: string
+        imageUrl:
+          type: string
     ItemDto:
       description: parent object for item(construction material etc)
       type: object
@@ -998,6 +1051,7 @@ components:
         - author
         - description
         - type
+        - images
       properties:
         id:
           type: integer
@@ -1021,6 +1075,10 @@ components:
         type:
           type: string
           description: Discriminator
+        images:
+          type: array
+          items:
+            $ref: "#/components/schemas/ImageDto"
       discriminator:
         propertyName: type
         mapping:
