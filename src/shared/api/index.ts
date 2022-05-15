@@ -1,5 +1,4 @@
 import axios from "axios";
-import { authApi } from "./api.instances";
 export const API_AUTH_URL = process.env.API_HOST;
 
 export const apiInstance = axios.create({
@@ -27,7 +26,7 @@ apiInstance.interceptors.response.use(
   async function (error) {
     const originalRequest = error.config;
     if (error.response.status === 401 && !originalRequest._retry) {
-      const refreshToken = window.localStorage.getItem("refresh_token");
+      // const refreshToken = window.localStorage.getItem("refresh_token");
       originalRequest.headers!.Authorization = ``;
       // if (refreshToken) {
       //   originalRequest._retry = true;
