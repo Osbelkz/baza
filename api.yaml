@@ -376,30 +376,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApiError"
-    put:
-      tags:
-        - Users
-      summary: Update user
-      operationId: update-user
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UserUpdateDto"
-        required: true
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserDto"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ApiError"
     delete:
       tags:
         - Users
@@ -418,6 +394,41 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserDeleteDto"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /users/{userId}:
+    put:
+      tags:
+        - Update user
+      summary: Update user
+      operationId: update-user
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: userId
+          in: path
+          description: User id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserUpdateDto"
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDto"
         "400":
           description: Bad Request
           content:

@@ -3,19 +3,27 @@ import { useGate, useStore } from "effector-react";
 import { Button, Form, Space } from "antd";
 import {
   $addUserModalVisibility,
+  $updateUserModalVisibility,
+  $userForUpdate,
   $users,
   addUserModalApi,
+  closeUpdateUserModal,
   deleteUserFx,
   GetUsersGate,
+  openUpdateUserModal,
   registrationUserFx,
+  updateUserFx,
 } from "./model";
-import { UserDeleteDto, UserRegistrationDto } from "shared/openapi";
-import { CreateUserModal, UsersTable } from "./ui";
+import { UserRegistrationDto } from "shared/openapi";
+import { CreateUserModal, UpdateUserModal, UsersTable } from "./ui";
 
 const AdminPanelUsers = () => {
   const users = useStore($users);
   const addUsersModalVisible = useStore($addUserModalVisibility);
+  const updateUsersModalVisible = useStore($updateUserModalVisibility);
+  const userForUpdate = useStore($userForUpdate);
   const isAddUserLoading = useStore(registrationUserFx.pending);
+  const isUpdateUserLoading = useStore(updateUserFx.pending);
 
   const [form] = Form.useForm();
 
@@ -24,10 +32,6 @@ const AdminPanelUsers = () => {
   const createUser = async (data: UserRegistrationDto) => {
     await registrationUserFx(data);
     form.resetFields();
-  };
-
-  const deleteUser = async (data: UserDeleteDto) => {
-    await deleteUserFx(data);
   };
 
   return (
@@ -41,7 +45,18 @@ const AdminPanelUsers = () => {
         modalVisible={addUsersModalVisible}
         closeModal={addUserModalApi.close}
       />
-      <UsersTable users={users?.items} deleteUser={deleteUser} />
+      <UpdateUserModal
+        modalVisible={updateUsersModalVisible}
+        isLoading={isUpdateUserLoading}
+        updateUser={updateUserFx}
+        closeModal={closeUpdateUserModal}
+        userForUpdate={userForUpdate}
+      />
+      <UsersTable
+        users={users?.items}
+        deleteUser={deleteUserFx}
+        openUpdateUserModal={openUpdateUserModal}
+      />
     </Space>
   );
 };

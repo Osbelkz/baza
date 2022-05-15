@@ -1,16 +1,20 @@
-import { Button, Checkbox, Space, Table } from "antd";
-import React from "react";
+import { Button, Checkbox, Popconfirm, Space, Table } from "antd";
+import React, { useState } from "react";
 import { UserDeleteDto, UserDto } from "shared/openapi";
 
 interface IUsersTableProps {
   users?: UserDto[];
   deleteUser: (data: UserDeleteDto) => void;
+  openUpdateUserModal: (userId: number) => void;
 }
 
 export const UsersTable: React.FC<IUsersTableProps> = ({
   users,
   deleteUser,
+  openUpdateUserModal,
 }) => {
+  const [openPopoverId, setOpenPopoverId] = useState<number | null>(null);
+
   const columns = [
     {
       title: "id",
@@ -47,7 +51,15 @@ export const UsersTable: React.FC<IUsersTableProps> = ({
       key: "delete",
       render: (user: UserDto) => (
         <Space size="middle">
-          <Button onClick={() => deleteUser({ id: user.id })}>delete</Button>
+          <Popconfirm
+            title="Удалить категорию?"
+            visible={openPopoverId === user.id}
+            onConfirm={() => deleteUser({ id: user.id })}
+            onCancel={() => setOpenPopoverId(null)}
+          >
+            <Button onClick={() => setOpenPopoverId(user.id)}>Удалить</Button>
+          </Popconfirm>
+          <Button onClick={() => openUpdateUserModal(user.id)}>Изменить</Button>
         </Space>
       ),
     },
