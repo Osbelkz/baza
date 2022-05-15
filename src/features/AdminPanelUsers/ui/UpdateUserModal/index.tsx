@@ -1,21 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Form, Input, Modal } from "antd";
-import { UserRegistrationDto } from "shared/openapi";
+import { UserDto, UserUpdateDto } from "shared/openapi";
 
 interface IProps {
   modalVisible: boolean;
   isLoading: boolean;
-  createUser: (data: UserRegistrationDto) => void;
+  updateUser: (data: UserUpdateDto) => void;
   closeModal: VoidFunction;
+  userForUpdate: UserDto | null;
 }
 
-export const CreateUserModal: React.FC<IProps> = ({
+export const UpdateUserModal: React.FC<IProps> = ({
   modalVisible,
   isLoading,
-  createUser,
+  userForUpdate,
   closeModal,
+  updateUser,
 }) => {
-  const [form] = Form.useForm();
+  const [form] = Form.useForm<UserUpdateDto>();
+
+  useEffect(() => {
+    if (userForUpdate) {
+      form.setFieldsValue({
+        firstName: userForUpdate.firstName,
+        lastName: userForUpdate.lastName,
+        email: userForUpdate.email,
+      });
+    }
+  }, [userForUpdate, form]);
 
   return (
     <Modal
@@ -25,33 +37,27 @@ export const CreateUserModal: React.FC<IProps> = ({
       footer={[
         <Button
           loading={isLoading}
-          form="addUserForm"
+          form="updateCategoryForm"
           key="submit"
           htmlType="submit"
         >
-          Создать
+          Обновить
         </Button>,
       ]}
     >
       <Form
         form={form}
-        id={"addUserForm"}
+        id={"updateCategoryForm"}
         name="user registration"
         autoComplete="off"
         size={"middle"}
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 20 }}
         initialValues={{ remember: true }}
-        onFinish={createUser}
+        onFinish={(data: UserUpdateDto) =>
+          updateUser({ ...data, id: userForUpdate!.id! })
+        }
       >
-        <Form.Item
-          label="email"
-          name="email"
-          rules={[{ type: "email", required: true, message: "!" }]}
-        >
-          <Input />
-        </Form.Item>
-
         <Form.Item
           label="firstName"
           name="firstName"
@@ -67,18 +73,11 @@ export const CreateUserModal: React.FC<IProps> = ({
           <Input />
         </Form.Item>
         <Form.Item
-          label="login"
-          name="login"
+          label="email"
+          name="email"
           rules={[{ required: true, message: "!" }]}
         >
           <Input />
-        </Form.Item>
-        <Form.Item
-          label="password"
-          name="password"
-          rules={[{ required: true, message: "!" }]}
-        >
-          <Input.Password />
         </Form.Item>
       </Form>
     </Modal>

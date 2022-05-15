@@ -12,7 +12,6 @@ import {
   openUpdateCategoryModal,
   updateAdminCategoryFx,
 } from "./model";
-import { CreateCategoryDto, UpdateCategoryDto } from "shared/openapi";
 import { CategoriesTable, UpdateCategoryModal } from "./ui";
 
 const AdminPanelCategories = () => {
@@ -25,20 +24,6 @@ const AdminPanelCategories = () => {
     getCategoriesFx();
   }, []);
 
-  const createCategory = (data: CreateCategoryDto) => {
-    createAdminCategoryFx(data);
-  };
-
-  const deleteCategory = (id: number) => {
-    deleteAdminCategoryFx(id);
-  };
-
-  const updateCategory = (data: UpdateCategoryDto) => {
-    updateAdminCategoryFx(data);
-  };
-
-  console.log(categories);
-
   return (
     <div>
       <Form
@@ -47,7 +32,7 @@ const AdminPanelCategories = () => {
         labelCol={{ span: 16 }}
         wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
-        onFinish={createCategory}
+        onFinish={createAdminCategoryFx}
         autoComplete="off"
       >
         <Form.Item
@@ -66,13 +51,13 @@ const AdminPanelCategories = () => {
       </Form>
       <CategoriesTable
         categories={categories?.items}
-        deleteCategory={deleteCategory}
+        deleteCategory={deleteAdminCategoryFx}
         openUpdateModal={openUpdateCategoryModal}
       />
       <UpdateCategoryModal
         modalVisible={isUpdateCategoryModalVisible}
         isLoading={isUpdateCategoryLoading}
-        updateCategory={updateCategory}
+        updateCategory={updateAdminCategoryFx}
         closeModal={closeUpdateCategoryModal}
         categoryForUpdate={categoryForUpdate}
       />
