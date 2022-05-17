@@ -333,6 +333,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApiError"
+  /admin/categories/{id}:
     delete:
       tags:
         - AdminCategory
@@ -510,6 +511,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApiError"
+  /admin/categories-group/{id}:
     delete:
       tags:
         - AdminCategoryGroup
@@ -646,6 +648,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApiError"
+  /admin/items/{id}:
     delete:
       tags:
         - AdminItems
