@@ -33,7 +33,7 @@
     "eject": "react-scripts eject",
     "format": "prettier --write src/**/*.ts{,x}",
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
-    "generate:api": "openapi-generator-cli generate -g typescript-axios -i ./api.yaml -o ./src/shared/openapi",
+    "generate:api": "openapi-generator-cli generate -g typescript-axios -i ./api.yaml -o ./src/shared/openapi --global-property skipFormModel=false",
     "prestart": "npm run generate:api",
     "prebuild": "npm run generate:api"
   },
